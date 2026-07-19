@@ -70,7 +70,7 @@
 }
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-body { margin: 0; text-wrap: pretty; font-family: var(--font-body); letter-spacing: -0.005em; background: var(--color-bg); color: var(--color-text); }
+body { margin: 0; text-wrap: pretty; font-family: var(--font-body); letter-spacing: -0.005em; background: var(--color-bg); color: var(--color-text); zoom: 1.25; }
 h1, h2, h3, h4, h5, h6 { letter-spacing: -0.02em; }
 a { color: var(--color-accent-700); }
 a:hover { color: var(--color-accent); }
