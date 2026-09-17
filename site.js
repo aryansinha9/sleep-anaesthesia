@@ -1,7 +1,7 @@
-// Sleep Anaesthesia — shared chrome (nav + footer), reveal, FAQ filtering.
+// Sleep Anaesthesia — shared nav, reveal, FAQ filtering. Footer + JSON-LD are static per page.
 (() => {
-  const MARK = `<img class="brand-mark" src="uploads/Screenshot 2026-07-17 at 2.27.27 pm copy (2)-7da914ac.png" alt="Sleep Anaesthesia logo" />`;
-  const MARK_LIGHT = `<img class="brand-mark" src="uploads/Screenshot 2026-07-17 at 2.27.27 pm copy (3).png" alt="Sleep Anaesthesia logo" />`;
+  const MARK = `<img class="brand-mark" src="uploads/sleep-anaesthesia-logo.png" alt="Sleep Anaesthesia logo" />`;
+  const MARK_LIGHT = `<img class="brand-mark" src="uploads/sleep-anaesthesia-logo-light.png" alt="Sleep Anaesthesia logo" />`;
   // Dental Clinics has a dropdown restoring the old sub-page wayfinding.
   const CLINIC_MENU = [
     ['clinics.html', 'General information'],
@@ -50,87 +50,7 @@
   });
   mobile.addEventListener('click', (e) => { if (e.target.closest('a')) nav.classList.remove('menu-open'); });
 
-  const footer = document.createElement('footer');
-  footer.className = 'footer';
-  footer.innerHTML = `<div class="wrap">
-    <div>
-      <a class="nav-brand" href="index.html" style="display:inline-flex;align-items:center;gap:10px;font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:18px;text-decoration:none;color:inherit;">${MARK_LIGHT}<span>Sleep Anaesthesia</span></a>
-      <p class="about" style="margin-top:14px;">Up to 40% of people experience dental fear. Our team of qualified anaesthesiologists, assistants and nurses is here to enhance your dental experience.</p>
-      <p class="about" style="margin-top:6px;">We now accept Afterpay, split your payment into 4 instalments.</p>
-    </div>
-    <div>
-      <h4>Quick links</h4>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="patients.html">Patients</a></li>
-        <li><a href="clinics.html">Dental clinics</a></li>
-        <li><a href="general-anaesthesia.html">General anaesthesia</a></li>
-        <li><a href="pricing.html">Pricing &amp; payment plans</a></li>
-        <li><a href="portal.html">Dental portal</a></li>
-      </ul>
-    </div>
-    <div>
-      <h4>Contact</h4>
-      <ul>
-        <li><a href="tel:0485692397">Call — 0485 692 397</a></li>
-        <li><a href="mailto:admin@sleepanaesthesia.com.au">admin@sleepanaesthesia.com.au</a></li>
-        <li><a href="https://instagram.com/sleepanaesthesia" target="_blank" rel="noopener">Instagram — @sleepanaesthesia</a></li>
-        <li><a href="contact.html">WhatsApp chat / enquiry</a></li>
-      </ul>
-    </div>
-    <div class="legal"><span>© Sleep Anaesthesia — Brisbane · Gold Coast · Melbourne</span><span>ANZCA-accredited specialist anaesthetists</span></div>
-  </div>`;
-  document.body.appendChild(footer);
-
-  // Structured data: MedicalBusiness sitewide + FAQPage/BreadcrumbList where relevant.
-  const BASE = 'https://sleepanaesthesia.com.au/';
-  const addLd = (obj) => {
-    const s = document.createElement('script');
-    s.type = 'application/ld+json';
-    s.textContent = JSON.stringify(obj);
-    document.head.appendChild(s);
-  };
-  addLd({
-    '@context': 'https://schema.org',
-    '@type': 'MedicalBusiness',
-    '@id': BASE + '#organization',
-    name: 'Sleep Anaesthesia',
-    url: BASE,
-    logo: BASE + 'uploads/Screenshot 2026-07-17 at 2.27.27 pm copy (2)-7da914ac.png',
-    telephone: '+61 485 692 397',
-    email: 'admin@sleepanaesthesia.com.au',
-    description: 'Mobile IV sedation and general anaesthesia services for dental clinics, delivered by ANZCA-accredited specialist anaesthetists with hospital-grade equipment.',
-    medicalSpecialty: 'Anesthesia',
-    areaServed: ['Brisbane', 'Gold Coast', 'Melbourne CBD', 'South East Melbourne'],
-    sameAs: ['https://instagram.com/sleepanaesthesia'],
-  });
-  if (page && page !== 'index.html') {
-    const names = { 'patients.html': 'Patients', 'clinics.html': 'Dental Clinics', 'general-anaesthesia.html': 'General Anaesthesia', 'pricing.html': 'Pricing & Payment Plans', 'contact.html': 'Contact', 'portal.html': 'Dental Portal' };
-    addLd({
-      '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: BASE },
-        { '@type': 'ListItem', position: 2, name: names[page] || document.title, item: BASE + page },
-      ],
-    });
-  }
-  const qas = [...document.querySelectorAll('details.qa:not(.rate)')];
-  if (qas.length) {
-    addLd({
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      mainEntity: qas.map((d) => {
-        const s = d.querySelector('summary').cloneNode(true);
-        s.querySelectorAll('.qa-cat, .qa-mark').forEach((n) => n.remove());
-        return {
-          '@type': 'Question',
-          name: s.textContent.trim(),
-          acceptedAnswer: { '@type': 'Answer', text: d.querySelector('.qa-body').textContent.trim() },
-        };
-      }),
-    });
-  }
+  // Footer and structured data are static HTML in each page (see tools/build-static.py).
 
   // reveal on scroll — fail-safe: hidden state only applies once JS confirms,
   // in-view elements reveal immediately, and a timeout reveals everything

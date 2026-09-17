@@ -337,3 +337,7 @@ body.js-reveal .reveal.in { opacity: 1; transform: none; }
   .hero { padding-top: calc(2.5 * var(--leading)); }
   .stats .grid { grid-template-columns: repeat(2, 1fr); justify-content: start; }
 }
+
+/* — footer additions: disclaimer + service-area link — */
+.footer .legal { flex-direction: column; gap: 8px; }
+.footer .legal .disclaimer { color: color-mix(in srgb, #fff 42%, transparent); max-width: 80ch; line-height: 18px; }
