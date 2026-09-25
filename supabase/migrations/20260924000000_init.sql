@@ -289,11 +289,24 @@ exception when others then
 end $$;
 
 -- ─── table privileges ──────────────────────────────────────────────────────
--- Belt and braces on top of RLS: anon has no table access at all.
-revoke all on public.admin_users, public.entries, public.entry_versions, public.audit_log, public.enquiries, public.login_attempts from anon;
-revoke all on public.login_attempts from authenticated;
-revoke insert, update, delete on public.entry_versions, public.audit_log from authenticated;
+-- Explicit grants, so this works whether or not the project "automatically
+-- exposes new tables". RLS policies above still decide which rows each user
+-- can touch; these grants only decide which tables the API can reach at all.
+-- anon: no table access except redirects (read) and the published view.
+revoke all on public.admin_users, public.entries, public.entry_versions, public.audit_log, public.enquiries, public.login_attempts, public.redirects from anon;
 grant select on public.redirects to anon;
+-- authenticated (staff, further limited by RLS + MFA):
+grant select, insert, update, delete on public.entries to authenticated;
+grant select, insert, update, delete on public.admin_users to authenticated;
+grant select, insert, update, delete on public.redirects to authenticated;
+grant select, update, delete on public.enquiries to authenticated;
+grant select on public.entry_versions, public.audit_log to authenticated;
+revoke insert, update, delete on public.entry_versions, public.audit_log from authenticated;
+revoke all on public.login_attempts from authenticated;
+-- service_role (server only: seed, uploads, enquiries, rate limiting):
+grant all on public.admin_users, public.entries, public.entry_versions, public.audit_log, public.enquiries, public.login_attempts, public.redirects to service_role;
+grant select on public.published_entries to service_role;
+grant usage, select on all sequences in schema public to authenticated, service_role;
 
 -- ─── storage ───────────────────────────────────────────────────────────────
 -- public-media:    optimised images, videos, captions. Public read; staff write.
