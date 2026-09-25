@@ -36,7 +36,9 @@ async function lookupDbRedirect(path: string): Promise<string | undefined> {
   if (!dbRedirects || Date.now() - dbRedirects.at > 60_000) {
     try {
       const res = await fetch(`${SUPABASE_URL}/rest/v1/redirects?select=from_path,to_path`, {
-        headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` },
+        // New-style publishable keys (sb_publishable_…) go in `apikey` only;
+        // legacy anon JWTs also need the Authorization header.
+        headers: { apikey: SUPABASE_ANON_KEY, ...(SUPABASE_ANON_KEY.startsWith('eyJ') ? { Authorization: `Bearer ${SUPABASE_ANON_KEY}` } : {}) },
         cache: 'no-store',
       })
       const rows: { from_path: string; to_path: string }[] = res.ok ? await res.json() : []
