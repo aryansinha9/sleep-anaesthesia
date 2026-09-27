@@ -50,7 +50,7 @@ export function Footer({ settings, locations, treatments }: { settings: SiteSett
           <Hours hours={settings.hours} caption="Office hours" />
         </div>
         <div className="legal">
-          <span>© {settings.businessName}. ANZCA-accredited specialist anaesthetists. Mobile service, Queensland &amp; Victoria. <Link href="/privacy">Privacy policy</Link></span>
+          <span>© {settings.businessName}. ANZCA-accredited specialist anaesthetists. Mobile service, Queensland &amp; Victoria. <Link href="/privacy">Privacy policy</Link> · <Link href="/admin/login" prefetch={false} rel="nofollow">Staff login</Link></span>
           <span className="disclaimer">Any surgical or invasive procedure carries risks. Before proceeding, you should seek a second opinion from an appropriately qualified health practitioner.</span>
         </div>
       </div>
