@@ -13,8 +13,7 @@ export const SETTINGS: SiteSettings = {
   state: 'QLD',
   postcode: '4032',
   showMap: true,
-  // Brief §6: Mon–Fri 9:00am–3:00pm. Weekends "Closed" until the client
-  // confirms the weekend arrangement (brief §13 item 2).
+  // Mon–Fri 9:00am–3:00pm; weekends closed (confirmed by the client, Oct 2026).
   hours: { mon: weekday, tue: weekday, wed: weekday, thu: weekday, fri: weekday, sat: closed, sun: closed },
   socialLinks: [{ label: 'Instagram', url: 'https://instagram.com/sleepanaesthesia' }],
   googleReviewUrl: '',
@@ -24,9 +23,9 @@ export const SETTINGS: SiteSettings = {
   minBookingStandard: 5000,
   minBookingStandardConsidered: 4000,
   minBookingRegional: 12000,
-  // Hidden until the client confirms public display (brief §13 item 5).
+  // Client: keep hidden; shared with clinics on enquiry only.
   showMinBooking: false,
-  // Hidden until Ahpra compliance is confirmed (brief §13 item 6).
+  // Client: not used, for Ahpra compliance. Keep off.
   testimonialsEnabled: false,
   beforeAfterEnabled: false,
 }

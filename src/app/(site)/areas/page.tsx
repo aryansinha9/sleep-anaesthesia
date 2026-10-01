@@ -8,13 +8,20 @@ import { breadcrumbSchema, buildMetadata } from '@/lib/seo'
 export const generateMetadata = () =>
   buildMetadata({ path: '/areas', pageKey: 'areas', title: 'Areas We Service: Queensland & Victoria', description: 'Mobile dental sedation for clinics in Brisbane, the Gold Coast, Sunshine Coast, Toowoomba, regional Queensland, Melbourne and regional Victoria.' })
 
-function TownList({ towns }: { towns: Location[] }) {
+// A town that is also a main area (e.g. Toowoomba) links to that area's page.
+function townHref(t: Location, primaries: Location[]): string | null {
+  if (locationHasPage(t)) return `/areas/${t.slug}`
+  const p = primaries.find((x) => x.name === t.name)
+  return p ? `/areas/${p.slug}` : null
+}
+
+function TownList({ towns, primaries }: { towns: Location[]; primaries: Location[] }) {
   if (!towns.length) return null
   return (
     <>
       <h3 style={{ fontSize: 16, margin: '18px 0 8px' }}>Towns we service</h3>
       <ul className="town-list">
-        {towns.map((t) => <li key={t.slug}>{locationHasPage(t) ? <Link href={`/areas/${t.slug}`}>{t.name}</Link> : t.name}</li>)}
+        {towns.map((t) => { const href = townHref(t, primaries); return <li key={t.slug}>{href ? <Link href={href}>{t.name}</Link> : t.name}</li> })}
       </ul>
     </>
   )
@@ -50,11 +57,11 @@ export default async function AreasPage() {
                   <div className="cell" key={l.slug}>
                     <h3><Link href={`/areas/${l.slug}`}>{l.name}</Link></h3>
                     <p>{l.summary}</p>
-                    {l.name === regionName && <TownList towns={towns} />}
+                    {l.name === regionName && <TownList towns={towns} primaries={primaries} />}
                   </div>
                 ))}
               </div>
-              {!primaries.some((l) => l.name === regionName) && <TownList towns={towns} />}
+              {!primaries.some((l) => l.name === regionName) && <TownList towns={towns} primaries={primaries} />}
             </section>
           )
         })}

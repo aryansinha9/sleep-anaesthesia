@@ -32,13 +32,32 @@ export default async function PatientsPage() {
           <span className="kicker">Sleep dentistry, explained</span>
           <h2 className="section-title">What dental sedation actually feels like</h2>
           <div className="cells reveal" style={{ marginTop: 'var(--leading)' }}>
+            {/* Card content supplied by the client (website edits.docx), verbatim. */}
             <div className="cell">
-              <h3>IV (twilight) sedation</h3>
-              <p>Medication through a small drip in your arm makes you calm, relaxed and sleepy. You are not fully unconscious, but most patients remember little or nothing afterwards. Local anaesthetic still numbs the teeth, so there is no pain. <Link href="/iv-sedation">More about IV sedation</Link>.</p>
+              <h3>Jet Ventilation – IV Sedation</h3>
+              <ul className="checklist">
+                <li>Deeper sedation maintained throughout the procedure.</li>
+                <li>Amnesic medication and IV anaesthetic provided.</li>
+                <li>Reduced level of consciousness.</li>
+                <li>Awareness and memory are significantly reduced.</li>
+                <li>Movement and coughing are significantly reduced compared with standard IV sedation.</li>
+                <li>Deeply relaxed with minimal awareness.</li>
+                <li>Medicare rebates lodged where applicable.</li>
+              </ul>
+              <p style={{ marginTop: 14 }}><Link href="/iv-sedation">More about IV sedation</Link></p>
             </div>
             <div className="cell">
-              <h3>General anaesthesia</h3>
-              <p>A combination of medicines keeps you fully unconscious and pain-free. Used for longer or more complex surgery in clinics that meet our <Link href="/general-anaesthesia">safety and access requirements</Link>.</p>
+              <h3>General Anaesthesia with Nasal Tube</h3>
+              <ul className="checklist">
+                <li>Fully unconscious, unaware, and amnesic.</li>
+                <li>The patient remains still throughout treatment.</li>
+                <li>Gag and cough reflexes are suppressed.</li>
+                <li>Nasal tube positioned through the nose.</li>
+                <li>Nasal tube keeps the mouth unobstructed for bite assessment and intraoral scanning.</li>
+                <li>Anaesthetic nurse present.</li>
+                <li>Medicare rebates lodged where applicable.</li>
+              </ul>
+              <p style={{ marginTop: 14 }}><Link href="/general-anaesthesia">More about general anaesthesia</Link></p>
             </div>
             <div className="cell">
               <h3>Who it helps</h3>
@@ -105,7 +124,7 @@ export default async function PatientsPage() {
 
         <hr className="rule2" />
 
-        <FaqSection faqs={faqs} kicker="Patient FAQs" title="Got a question? Search it." searchLabel="Search frequently asked questions" placeholder="Search all questions, e.g. fasting, Medicare, driving" />
+        <FaqSection grouped faqs={faqs} kicker="Patient FAQs" title="Got a question? Search it." searchLabel="Search frequently asked questions" placeholder="Search all questions, e.g. fasting, Medicare, driving" />
 
         <section className="section" style={{ paddingTop: 0 }}>
           <Enquiry settings={settings} audience="patient" page="patients" title="Ask us a question" />

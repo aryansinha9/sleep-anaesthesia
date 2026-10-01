@@ -46,7 +46,11 @@ export default async function LocationPage({ params }: Props) {
           {towns.length > 0 && (
             <>
               <h2 className="section-title" style={{ fontSize: 22, marginTop: 'var(--leading)' }}>Towns we service</h2>
-              <ul className="town-list">{towns.map((t) => <li key={t.slug}>{locationHasPage(t) ? <Link href={`/areas/${t.slug}`}>{t.name}</Link> : t.name}</li>)}</ul>
+              <ul className="town-list">{towns.map((t) => {
+                const primary = all.find((p) => p.kind === 'primary' && p.name === t.name)
+                const href = locationHasPage(t) ? `/areas/${t.slug}` : primary ? `/areas/${primary.slug}` : null
+                return <li key={t.slug}>{href ? <Link href={href}>{t.name}</Link> : t.name}</li>
+              })}</ul>
             </>
           )}
         </section>

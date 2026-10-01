@@ -7,6 +7,7 @@ const ACTIONS: Record<string, string> = {
   create: 'Created draft', 'create+publish': 'Created and published', 'update-draft': 'Saved draft', publish: 'Published', unpublish: 'Unpublished',
   'discard-draft': 'Discarded draft', delete: 'Moved to bin', restore: 'Restored', 'delete-permanently': 'Deleted permanently', update: 'Updated',
   'invite-user': 'Invited user', 'remove-user': 'Removed user', 'disable-user': 'Removed access', 'enable-user': 'Restored access', 'change-role': 'Changed role',
+  'create-portal-code': 'Created portal code', 'delete-portal-code': 'Deleted portal code', 'enable-portal-code': 'Switched portal code on', 'disable-portal-code': 'Switched portal code off',
 }
 
 export default async function AuditPage({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
@@ -27,7 +28,7 @@ export default async function AuditPage({ searchParams }: { searchParams: Promis
                 <td style={{ whiteSpace: 'nowrap' }}>{new Date(r.at).toLocaleString('en-AU', { dateStyle: 'medium', timeStyle: 'short' })}</td>
                 <td>{r.actor_email || 'System'}</td>
                 <td>{ACTIONS[r.action] || r.action}</td>
-                <td className="title">{isCollectionKey(String(r.target)) ? COLLECTION_BY_KEY[String(r.target) as CollectionKey].singular : r.target}{r.summary ? `: ${r.summary}` : ''}</td>
+                <td className="title">{isCollectionKey(String(r.target)) ? COLLECTION_BY_KEY[String(r.target) as CollectionKey].singular : r.target === 'portal' ? 'Clinic portal' : r.target}{r.summary ? `: ${r.summary}` : ''}</td>
               </tr>
             ))}
           </tbody>

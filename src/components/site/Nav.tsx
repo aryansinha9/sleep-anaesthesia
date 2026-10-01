@@ -9,9 +9,15 @@ type MenuItem = { href: string; label: string }
 
 const CLINIC_MENU: MenuItem[] = [
   { href: '/clinics', label: 'General information' },
-  { href: '/general-anaesthesia', label: 'General anaesthesia' },
-  { href: '/general-anaesthesia#logistics', label: 'Logistics & site requirements' },
+  { href: '/portal', label: 'Clinic portal: GA requirements & logistics' },
   { href: '/areas', label: 'Areas we service' },
+]
+
+// Payments live under Patient Info so the fees and TLC pages are easy to find.
+const PATIENT_MENU: MenuItem[] = [
+  { href: '/patients', label: 'Patient information & FAQs' },
+  { href: '/pricing', label: 'Fees & payment plans' },
+  { href: '/pricing#plans', label: 'TLC payment plans' },
 ]
 
 const Chevron = () => (
@@ -68,9 +74,10 @@ export function Nav({ treatments, brand }: { treatments: MenuItem[]; brand: stri
         <span>{brand}</span>
       </Link>
       <Link className="nav-link" href="/iv-sedation" aria-current={current('/iv-sedation')}>IV Sedation</Link>
+      <Link className="nav-link" href="/general-anaesthesia" aria-current={current('/general-anaesthesia')}>General Anaesthesia</Link>
       {treatments.length > 0 && <Dropdown label="Sleep Treatments" items={treatments} current={is('/treatments')} allHref="/treatments" allLabel="All sleep treatments →" />}
-      <Link className="nav-link" href="/patients" aria-current={current('/patients')}>Patient Info</Link>
-      <Dropdown label="Dental Clinics" items={CLINIC_MENU} current={is('/clinics') || is('/general-anaesthesia') || is('/areas')} />
+      <Dropdown label="Patient Info" items={PATIENT_MENU} current={is('/patients') || is('/pricing')} />
+      <Dropdown label="Dental Clinics" items={CLINIC_MENU} current={is('/clinics') || is('/portal') || is('/areas')} />
       <Link className="nav-link" href="/contact" aria-current={current('/contact')}>Contact</Link>
       <Link className="btn btn-primary" href="/contact#enquire">Enquire now</Link>
       <button type="button" className="nav-burger" aria-label={menu ? 'Close menu' : 'Open menu'} aria-expanded={menu} aria-controls="mobile-menu" onClick={() => setMenu((m) => !m)}>
@@ -79,6 +86,7 @@ export function Nav({ treatments, brand }: { treatments: MenuItem[]; brand: stri
       <div className="mobile-menu" id="mobile-menu" onClick={(e) => { if ((e.target as HTMLElement).closest('a')) setMenu(false) }}>
         <Link href="/" aria-current={pathname === '/' ? 'page' : undefined}>Home</Link>
         <Link href="/iv-sedation" aria-current={current('/iv-sedation')}>IV Sedation</Link>
+        <Link href="/general-anaesthesia" aria-current={current('/general-anaesthesia')}>General Anaesthesia</Link>
         {treatments.length > 0 && (
           <details>
             <summary>Sleep Treatments</summary>
@@ -86,14 +94,15 @@ export function Nav({ treatments, brand }: { treatments: MenuItem[]; brand: stri
             <Link href="/treatments">All sleep treatments</Link>
           </details>
         )}
-        <Link href="/patients" aria-current={current('/patients')}>Patient Info</Link>
+        <details>
+          <summary>Patient Info</summary>
+          {PATIENT_MENU.map((t) => <Link key={t.href} href={t.href}>{t.label}</Link>)}
+        </details>
         <details>
           <summary>Dental Clinics</summary>
           {CLINIC_MENU.map((t) => <Link key={t.href} href={t.href}>{t.label}</Link>)}
         </details>
-        <Link href="/pricing" aria-current={current('/pricing')}>Fees &amp; payment plans</Link>
         <Link href="/contact" aria-current={current('/contact')}>Contact</Link>
-        <Link href="/portal">Dental portal</Link>
         <Link className="btn btn-primary" href="/contact#enquire">Enquire now</Link>
       </div>
     </nav>

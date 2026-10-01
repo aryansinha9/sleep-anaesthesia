@@ -1,6 +1,7 @@
 // Service areas (brief §1.2–1.3). Primary areas each get a page with distinct
-// copy. Towns are stored with active=false until the client confirms which
-// ones are serviced (brief §13 item 3); inactive towns never render.
+// copy. The client confirmed (Oct 2026) that ALL listed towns are serviced and
+// that Melbourne coverage is all of Melbourne. Towns are listed as plain text
+// on the areas pages; a town only gets its own page once it has unique content.
 import type { Location } from '../types'
 
 const cta = `<p><a href="/contact">Contact us</a> to check availability for your clinic or to arrange a list.</p>`
@@ -79,10 +80,10 @@ export const PRIMARY_LOCATIONS: Location[] = [
     slug: 'melbourne',
     state: 'VIC',
     region: 'Melbourne',
-    summary: 'Melbourne dental clinics, including the CBD and South East suburbs.',
+    summary: 'Dental clinics across all of Melbourne.',
     body:
       `<h2>Mobile anaesthesia for Melbourne dental clinics</h2><p>Our Victorian team provides the same service as in Queensland: FANZCA specialist anaesthetists and anaesthetic nurses with hospital-grade monitoring, brought to your practice. All practitioners are insured, credentialed and licensed to provide sedation in Victoria.</p>` +
-      `<h2>Working with Melbourne practices</h2><p>We work with Melbourne clinics in the CBD and South East suburbs. Ad-hoc lists are welcome and regular operating days can be arranged. Patients are billed directly, so there is no cost to your practice.</p>` +
+      `<h2>Working with Melbourne practices</h2><p>We work with dental clinics across all of Melbourne. Ad-hoc lists are welcome and regular operating days can be arranged. Patients are billed directly, so there is no cost to your practice.</p>` +
       cta,
     seoTitle: 'Mobile IV Sedation for Melbourne Dental Clinics',
     seoDescription: 'FANZCA specialist anaesthetists providing mobile IV sedation and general anaesthesia to Melbourne dental clinics. No cost to your practice.',
@@ -114,7 +115,7 @@ const town = (name: string, state: 'QLD' | 'VIC'): Location => ({
   kind: 'town',
   state,
   region: state === 'QLD' ? 'Regional Queensland' : 'Regional Victoria',
-  active: false,
+  active: true,
   hasPage: false,
   summary: '',
   body: '',

@@ -97,8 +97,6 @@ export const COLLECTIONS: CollectionDef[] = [
       { type: 'number', name: 'minBookingStandardConsidered', label: 'Standard bookings considered from', min: 0, max: 100000, step: 100, prefix: '$', help: 'Smaller bookings from this value will be considered.' },
       { type: 'number', name: 'minBookingRegional', label: 'Regional / outreach minimum booking', min: 0, max: 200000, step: 100, prefix: '$', help: 'Minimum booking for regional and outreach centres.' },
       { type: 'boolean', name: 'showMinBooking', label: 'Show minimum booking values publicly', help: 'When off, values are only shared with clinics on enquiry.' },
-      { type: 'boolean', name: 'testimonialsEnabled', label: 'Show testimonials section', help: 'Keep off until you have confirmed testimonials comply with Ahpra advertising guidelines.' },
-      { type: 'boolean', name: 'beforeAfterEnabled', label: 'Show before-and-after gallery', help: 'Keep off until you have confirmed the images comply with Ahpra advertising guidelines.' },
     ],
   },
   {
@@ -151,7 +149,7 @@ export const COLLECTIONS: CollectionDef[] = [
     titleField: 'title',
     slugField: 'slug',
     fields: [
-      { type: 'text', name: 'title', label: 'Page title', max: 60, required: true, help: 'The main heading on the treatment page, e.g. "Sedation for Dental Implants".' },
+      { type: 'text', name: 'title', label: 'Page title', max: 80, required: true, help: 'The main heading on the treatment page, e.g. "Sedation for Dental Implants". Also used as the Google title unless an SEO title is set.' },
       { type: 'text', name: 'menuLabel', label: 'Menu label', max: 32, required: true, help: 'Short name used in the menu and treatment lists, e.g. "Dental implants".' },
       { type: 'slug', name: 'slug', label: 'Web address', from: 'title', required: true, help: 'The end of the page address: /treatments/your-slug. Changing it on a published page creates a redirect automatically.' },
       { type: 'textarea', name: 'summary', label: 'Short summary', max: 180, rows: 3, required: true, help: 'One or two sentences shown in treatment lists.' },
@@ -233,7 +231,7 @@ export const COLLECTIONS: CollectionDef[] = [
       {
         type: 'select', name: 'category', label: 'Category', required: true,
         options: [
-          { value: 'pay', label: 'Patients: Payment & Medicare' }, { value: 'iv', label: 'Patients: IV sedation' }, { value: 'ga', label: 'Patients: General anaesthesia' },
+          { value: 'pay', label: 'Patients: Payment' }, { value: 'iv', label: 'Patients: IV Sedation' }, { value: 'ga', label: 'Patients: General Anaesthesia' },
           { value: 'book', label: 'Clinics: Booking & scheduling' }, { value: 'clin', label: 'Clinics: Clinical & safety' }, { value: 'admin', label: 'Clinics: Billing & admin' },
         ],
       },

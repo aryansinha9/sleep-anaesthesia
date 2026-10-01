@@ -11,15 +11,17 @@ export default async function DashLayout({ children }: { children: React.ReactNo
   if (!supabaseConfigured) return <NotConfigured />
   const staff = await requireStaffPage()
   const isAdmin = staff.role === 'admin'
+  // Testimonials and before-and-after are not used (client decision, Ahpra), so
+  // they are left out of the menu; the site keeps them switched off.
   const content = COLLECTIONS.filter((c) => !c.adminOnly || isAdmin)
   const groups = [
     { label: 'Overview', items: [{ href: '/admin', label: 'Dashboard' }] },
     { label: 'Pages & media', items: content.filter((c) => ['home', 'media', 'videos', 'banner', 'page_seo'].includes(c.key)).map((c) => ({ href: `/admin/content/${c.key}`, label: c.label })) },
-    { label: 'Content', items: content.filter((c) => ['treatments', 'locations', 'faqs', 'testimonials', 'before_after'].includes(c.key)).map((c) => ({ href: `/admin/content/${c.key}`, label: c.label })) },
+    { label: 'Content', items: content.filter((c) => ['treatments', 'locations', 'faqs'].includes(c.key)).map((c) => ({ href: `/admin/content/${c.key}`, label: c.label })) },
     {
       label: 'Manage',
       items: [
-        ...(isAdmin ? [{ href: '/admin/content/settings', label: 'Site settings' }, { href: '/admin/enquiries', label: 'Enquiries' }, { href: '/admin/users', label: 'Users' }, { href: '/admin/audit', label: 'Activity log' }] : []),
+        ...(isAdmin ? [{ href: '/admin/content/settings', label: 'Site settings' }, { href: '/admin/portal', label: 'Clinic portal codes' }, { href: '/admin/enquiries', label: 'Enquiries' }, { href: '/admin/users', label: 'Users' }, { href: '/admin/audit', label: 'Activity log' }] : []),
         { href: '/admin/bin', label: 'Bin' },
       ],
     },

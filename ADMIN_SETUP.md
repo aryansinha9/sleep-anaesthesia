@@ -94,6 +94,28 @@ This runs the acceptance checks directly against the Supabase API:
 
 It creates and removes a temporary editor account.
 
+## Clinic portal (access codes)
+
+The general anaesthesia **clinic suitability requirements** and **site logistics** are only shown in the dental portal (`/portal`), never on the public site.
+
+1. Run `supabase/migrations/20261001000000_portal_access_codes.sql` once (SQL Editor → paste → Run, or `supabase db push`).
+2. In the dashboard, go to **Clinic portal codes** (admins only). Enter the clinic's name and click **Create access code**.
+3. Copy the code (e.g. `K7QM2-XR9TP`) and send it to that clinic. It is shown only once: only a scrambled (hashed) copy is stored.
+4. To revoke access, switch the clinic's code **off**. That clinic is locked out on its next visit, even if it's already signed in.
+
+Wrong codes are rate-limited (10 attempts per 15 minutes per connection).
+
+## Updating content from the seed files
+
+Content normally changes in the dashboard. For bulk changes made in code (`src/content/seed/`), publish them with:
+
+```bash
+npm run sync-content -- treatments locations page_seo
+SITE_URL=https://sleepanaesthesia.com.au npm run sync-content -- treatments   # refresh the live site's cache
+```
+
+Items are matched by web address (or page). Every change goes into version history, so it can be restored from the dashboard.
+
 ## Roles
 
 | | Admin | Editor |
@@ -102,7 +124,7 @@ It creates and removes a temporary editor account.
 | Move items to the bin and restore them | ✓ | ✓ |
 | Delete permanently | ✓ | ✗ |
 | Site settings (hours, phone, address, chat, minimum bookings, compliance switches) | ✓ | ✗ |
-| Users, activity log, enquiries | ✓ | ✗ |
+| Users, activity log, enquiries, clinic portal codes | ✓ | ✗ |
 
 ## Chat widget
 

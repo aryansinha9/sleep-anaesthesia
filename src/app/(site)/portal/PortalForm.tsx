@@ -1,19 +1,18 @@
 'use client'
 
-import { useState } from 'react'
+import { useActionState } from 'react'
+import { unlockPortal, type PortalState } from '@/app/actions/portal'
 
-// Unchanged behaviour from the previous site: the portal itself is not part
-// of this brief, so the form still only shows the "incorrect password" note.
 export function PortalForm() {
-  const [error, setError] = useState(false)
+  const [state, action, pending] = useActionState<PortalState, FormData>(unlockPortal, null)
   return (
-    <form onSubmit={(e) => { e.preventDefault(); setError(true) }} style={{ display: 'flex', gap: 'var(--space-3)', flexWrap: 'wrap', alignItems: 'flex-end', marginTop: 'calc(1.5 * var(--leading))', maxWidth: 460 }}>
+    <form action={action} style={{ display: 'flex', gap: 'var(--space-3)', flexWrap: 'wrap', alignItems: 'flex-end', marginTop: 'calc(1.5 * var(--leading))', maxWidth: 460 }}>
       <div className="field" style={{ flex: '1 1 240px' }}>
-        <label htmlFor="p-pass">Password</label>
-        <input className="input" id="p-pass" type="password" required />
+        <label htmlFor="p-code">Clinic access code</label>
+        <input className="input" id="p-code" name="code" autoComplete="off" autoCapitalize="characters" spellCheck={false} placeholder="XXXXX-XXXXX" required maxLength={40} />
       </div>
-      <button type="submit" className="btn btn-primary">Enter portal</button>
-      {error && <p className="form-error" role="alert" style={{ flexBasis: '100%' }}>Incorrect password. Contact our team if you&apos;ve lost your access code.</p>}
+      <button type="submit" className="btn btn-primary" disabled={pending}>{pending ? 'Checking…' : 'Enter portal'}</button>
+      {state?.error && <p className="form-error" role="alert" style={{ flexBasis: '100%' }}>{state.error}</p>}
     </form>
   )
 }

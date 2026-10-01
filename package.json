@@ -10,7 +10,8 @@
     "seed": "NODE_OPTIONS=--conditions=react-server tsx scripts/seed.ts",
     "verify:security": "NODE_OPTIONS=--conditions=react-server tsx scripts/verify-security.ts",
     "create-admin": "NODE_OPTIONS=--conditions=react-server tsx scripts/create-admin.ts",
-    "check:content": "NODE_OPTIONS=--conditions=react-server tsx scripts/check-content.ts"
+    "check:content": "NODE_OPTIONS=--conditions=react-server tsx scripts/check-content.ts",
+    "sync-content": "NODE_OPTIONS=--conditions=react-server tsx scripts/sync-content.ts"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

@@ -3,11 +3,12 @@ import { sanitizeRichText, toPlainText } from '@/lib/sanitize'
 import { FaqList } from './FaqList'
 
 const CATEGORY_LABELS: Record<string, string> = {
-  pay: 'Payment & Medicare', iv: 'IV sedation', ga: 'General anaesthesia',
+  // Patient categories use the client's names (website edits.docx).
+  pay: 'Payment', iv: 'IV Sedation', ga: 'General Anaesthesia',
   book: 'Booking & scheduling', clin: 'Clinical & safety', admin: 'Billing & admin',
 }
 
-export function FaqSection({ faqs, kicker, title, searchLabel, placeholder, id = 'faq' }: { faqs: Faq[]; kicker: string; title: string; searchLabel: string; placeholder: string; id?: string }) {
+export function FaqSection({ faqs, kicker, title, searchLabel, placeholder, id = 'faq', grouped = false }: { faqs: Faq[]; kicker: string; title: string; searchLabel: string; placeholder: string; id?: string; grouped?: boolean }) {
   if (!faqs.length) return null
   const cats = [...new Set(faqs.map((f) => f.category))]
   const items = faqs.map((f) => {
@@ -18,7 +19,7 @@ export function FaqSection({ faqs, kicker, title, searchLabel, placeholder, id =
     <section id={id} className="section">
       <span className="kicker">{kicker}</span>
       <h2 className="section-title">{title}</h2>
-      <FaqList items={items} categories={cats.map((c) => ({ value: c, label: CATEGORY_LABELS[c] || c }))} searchLabel={searchLabel} placeholder={placeholder} />
+      <FaqList items={items} categories={cats.map((c) => ({ value: c, label: CATEGORY_LABELS[c] || c }))} searchLabel={searchLabel} placeholder={placeholder} grouped={grouped} />
     </section>
   )
 }

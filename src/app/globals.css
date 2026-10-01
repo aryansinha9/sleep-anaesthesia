@@ -108,14 +108,15 @@ a:hover { color: var(--color-link-hover); }
 .preview-bar a { color: var(--color-navy); margin-left: 8px; }
 
 /* ─── masthead ─────────────────────────────────────────────────────────── */
-.nav { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; gap: clamp(14px, 1.8vw, 28px); min-height: 68px;
-  padding-inline: max(var(--edge), calc((100% - 1180px) / 2 + var(--edge)));
+.nav { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; gap: clamp(14px, 1.5vw, 22px); min-height: 68px;
+  padding-inline: max(var(--edge), calc((100% - 1240px) / 2 + var(--edge)));
   background: color-mix(in srgb, var(--color-bg) 90%, transparent); backdrop-filter: blur(12px); border-bottom: 1px solid var(--color-divider); }
 .nav-brand { display: inline-flex; align-items: center; gap: 10px; margin-right: auto; text-decoration: none; color: var(--color-text); font-family: var(--font-heading); font-weight: 800; font-size: 17px; white-space: nowrap; }
 .nav-brand:hover { color: var(--color-text); }
 .nav .nav-brand { min-width: 0; flex-shrink: 1; }
 .nav .nav-brand span { overflow: hidden; text-overflow: ellipsis; min-width: 0; }
 .nav-burger { flex: none; }
+@media (min-width: 1241px) { .nav .nav-brand { flex-shrink: 0; } }
 .brand-mark { width: 44px; height: auto; flex: none; }
 .nav-link, .nav-drop-trigger { display: inline-flex; align-items: center; min-height: 44px; font-size: 15px; font-weight: 600; white-space: nowrap; text-decoration: none; color: color-mix(in srgb, var(--color-text) 80%, transparent); background: none; border: 0; padding: 0; font-family: inherit; cursor: pointer; }
 .nav-link:hover, .nav-link[aria-current='page'], .nav-drop-trigger:hover, .nav-drop-trigger[data-current='true'] { color: var(--color-gold-700); }
@@ -129,7 +130,7 @@ a:hover { color: var(--color-link-hover); }
 .nav-menu a { display: flex; align-items: center; min-height: 40px; padding: 8px 12px; border-radius: var(--radius-sm); font-size: 14.5px; font-weight: 600; color: var(--color-text); text-decoration: none; }
 .nav-menu a:hover, .nav-menu a[aria-current='page'] { background: var(--color-gold-100); color: var(--color-gold-800); }
 .nav-menu .nav-menu-all { border-top: 1px solid var(--color-divider); margin-top: 4px; padding-top: 10px; color: var(--color-gold-700); }
-.nav .btn { min-height: 40px; padding: 8px 18px; font-size: 14.5px; }
+.nav .btn { min-height: 40px; padding: 8px 18px; font-size: 14.5px; white-space: nowrap; flex: none; }
 
 .nav-burger { display: none; width: 44px; height: 44px; border: 0; background: none; cursor: pointer; padding: 11px; flex-direction: column; justify-content: center; gap: 5px; border-radius: var(--radius-sm); }
 .nav-burger span { display: block; height: 2px; width: 100%; background: var(--color-text); border-radius: 2px; transition: transform 0.25s ease, opacity 0.2s ease; }
@@ -138,7 +139,7 @@ a:hover { color: var(--color-link-hover); }
 .nav[data-menu='open'] .nav-burger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 .mobile-menu { display: none; }
 
-@media (max-width: 1080px) {
+@media (max-width: 1240px) {
   .nav .nav-link, .nav .nav-drop, .nav > .btn { display: none; }
   .nav-burger { display: flex; }
   .mobile-menu { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; max-height: calc(100vh - 68px); overflow-y: auto;
@@ -398,3 +399,17 @@ details.qa .qa-body p:last-child { margin-bottom: 0; }
 .town-list a { color: inherit; font-weight: 600; }
 .split-form { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); align-items: start; }
 @media (max-width: 760px) { .split-form { grid-template-columns: 1fr; } .split-form .split-copy { order: 0; } }
+
+/* ─── compact, categorised FAQs (Patient Info, Dental Clinics) ─────────── */
+.faq-grouped .faq-group + .faq-group { margin-top: calc(1.4 * var(--leading)); }
+.faq-group-title { font-size: 19px; margin: 0 0 6px; padding-bottom: 8px; border-bottom: 2px solid var(--color-gold-400); color: var(--color-text); }
+.faq-grouped details.qa:first-of-type { border-top: 0; }
+.faq-grouped details.qa summary { padding: 12px 0; font-size: 16px; line-height: 1.4; }
+.faq-grouped details.qa .qa-body { padding-bottom: 16px; }
+.faq-grouped details.qa .qa-mark { font-size: 22px; }
+
+/* ─── General anaesthesia page ─────────────────────────────────────────── */
+.display .ga-serviced { font-size: 0.55em; font-weight: 700; color: var(--color-gold-700); letter-spacing: -0.015em; margin-top: 0.35em; }
+.ga-notice { margin-top: var(--leading); max-width: var(--measure); border: 1px solid var(--color-gold-300); border-left: 4px solid var(--color-gold-500); background: var(--color-gold-100); border-radius: var(--radius-md); padding: 14px 18px; color: var(--color-gold-800); }
+.ga-notice strong { display: block; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+.ga-notice ul { margin: 0; padding-left: 1.2em; font-size: 16px; line-height: 1.6; color: var(--color-text); }

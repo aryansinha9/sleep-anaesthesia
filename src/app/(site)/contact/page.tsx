@@ -42,7 +42,7 @@ export default async function ContactPage() {
             <h2 className="section-title" style={{ fontSize: 20, marginTop: 'calc(1.4 * var(--leading))' }}>Office hours</h2>
             <div className="note"><Hours hours={settings.hours} caption="Office hours" /></div>
 
-            <p className="note" style={{ marginTop: 'var(--leading)' }}>Our detailed pricing information is available exclusively for verified dental clinics. Choose &ldquo;Dental clinic&rdquo; on the form and we&apos;ll email you a personalised access code for the <Link href="/portal">dental portal</Link>.</p>
+            <p className="note" style={{ marginTop: 'var(--leading)' }}>Clinic suitability requirements and site logistics for general anaesthesia are available exclusively to verified dental clinics. Choose &ldquo;Dental clinic&rdquo; on the form and we&apos;ll email you a personalised access code for the <Link href="/portal">dental portal</Link>.</p>
             <p className="note">Servicing dental clinics across Queensland and Victoria. See <Link href="/areas">areas we service</Link>.</p>
           </div>
           <Enquiry settings={settings} audience="clinic" page="contact" title="Send an enquiry" />

@@ -52,7 +52,7 @@ export default async function ClinicsPage() {
           <span className="kicker">Ideal for</span>
           <h2 className="section-title" id="ideal-h">Procedures and patients we support</h2>
           <div style={{ marginTop: 'var(--leading)' }}>
-            <TreatmentList treatments={treatments} extra={['Long restorative appointments', 'Anxious or phobic patients']} />
+            <TreatmentList treatments={treatments} />
           </div>
         </section>
 
@@ -60,7 +60,7 @@ export default async function ClinicsPage() {
 
         <hr className="rule2" />
 
-        <FaqSection faqs={faqs} kicker="FAQ: dentists & practices" title="Everything your practice needs to know" searchLabel="Search clinic FAQs" placeholder="Search, e.g. booking, equipment, billing, consent" />
+        <FaqSection grouped faqs={faqs} kicker="FAQ: dentists & practices" title="Everything your practice needs to know" searchLabel="Search clinic FAQs" placeholder="Search, e.g. booking, equipment, billing, consent" />
 
         <PhotoGrid slot="clinics_gallery" kicker="Gallery" title="A safe, sophisticated sedation environment" />
 

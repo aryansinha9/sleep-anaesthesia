@@ -43,7 +43,7 @@ const blocked = (r: { error: unknown; data: unknown }) => Boolean(r.error) || (A
 async function anonymousTests() {
   console.log('\nAnonymous visitor (anon key, no session)')
   const anon = createClient(URL_, ANON, { auth: { persistSession: false } })
-  for (const table of ['entries', 'entry_versions', 'admin_users', 'audit_log', 'enquiries', 'login_attempts']) {
+  for (const table of ['entries', 'entry_versions', 'admin_users', 'audit_log', 'enquiries', 'login_attempts', 'portal_access_codes']) {
     const r = await anon.from(table).select('*').limit(1)
     check(`cannot read ${table}`, blocked(r), r.error ? '' : `returned ${JSON.stringify(r.data).slice(0, 80)}`)
   }
@@ -126,6 +126,10 @@ async function editorTests() {
     check('cannot erase the audit log', blocked(tamper))
     const enq = await editor.from('enquiries').select('*').limit(1)
     check('cannot read enquiries', blocked(enq))
+    const codes = await editor.from('portal_access_codes').select('*').limit(1)
+    check('cannot read clinic portal codes', blocked(codes))
+    const newCode = await editor.from('portal_access_codes').insert({ clinic_name: 'x', code_hash: '0'.repeat(64) }).select()
+    check('cannot create clinic portal codes', blocked(newCode))
     const up = await editor.storage.from('public-media').upload(`test/${Date.now()}.webp`, new Blob(['x'], { type: 'image/webp' }))
     check('can upload media', !up.error, up.error?.message)
     if (up.data) {
@@ -151,6 +155,13 @@ async function siteTests() {
     check('admin pages are not served to anonymous visitors', settings.status >= 300 && settings.status < 400)
     const preview = await fetch(`${SITE}/api/preview?path=/`, { redirect: 'manual' })
     check('preview (draft mode) refuses anonymous visitors', preview.status === 401)
+    const reval = await fetch(`${SITE}/api/revalidate`, { method: 'POST', body: '{"collections":["treatments"]}' })
+    check('cache refresh endpoint refuses callers without the secret key', reval.status === 401)
+    const ga = await (await fetch(`${SITE}/general-anaesthesia`)).text()
+    const portal = await (await fetch(`${SITE}/portal`)).text()
+    const lockedPhrases = ['Where general anaesthesia can be delivered', 'Setting up on the day', 'Accreditation, Inspections and regulations apply']
+    check('locked GA requirements are not in the public GA page', lockedPhrases.every((x) => !ga.includes(x)))
+    check('locked GA requirements are not shown without a portal code', lockedPhrases.every((x) => !portal.includes(x)))
     const robots = await (await fetch(`${SITE}/robots.txt`)).text()
     check('robots.txt blocks /admin', /Disallow: \/admin/.test(robots))
     const sitemap = await (await fetch(`${SITE}/sitemap.xml`)).text()
